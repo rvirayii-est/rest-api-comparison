@@ -1,0 +1,3 @@
+nest-js-api/node_modules/**
+nest-js-api/docker-compose.yml
+nest-js-api/package-lock.json
