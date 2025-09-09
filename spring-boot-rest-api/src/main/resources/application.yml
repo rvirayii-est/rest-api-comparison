@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    default: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5434/secureapi
+    username: secure
+    password: secure
+  jpa:
+    hibernate:
+      ddl-auto: update # dev only; use migrations in prod
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  cors-origins: "https://your-ui.example,http://localhost:5173"
+  access-token-ttl-seconds: 900
+  refresh-token-ttl-seconds: 604800
+  refresh-cookie-name: refresh
+  cookie-domain: localhost
+  cookie-secure: false
+  cookie-samesite: strict
+  jwt:
+    private-key: |
+      -----BEGIN PRIVATE KEY-----
+      YOUR_DEV_PRIVATE_KEY
+      -----END PRIVATE KEY-----
+    public-key: |
+      -----BEGIN PUBLIC KEY-----
+      YOUR_DEV_PUBLIC_KEY
+      -----END PUBLIC KEY-----

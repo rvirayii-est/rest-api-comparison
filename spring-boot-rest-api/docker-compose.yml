@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: secureapi
+      POSTGRES_USER: secure
+      POSTGRES_PASSWORD: secure
+    ports:
+      - '5434:5432'
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata: {}
