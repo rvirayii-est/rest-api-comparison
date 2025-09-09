@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { RefreshToken } from './entities/refresh-token.entity';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class TokensService {
   }
 
   async verify(tokenHash: string) {
-    const rec = await this.repo.findOne({ where: { tokenHash, revokedAt: null } });
+    const rec = await this.repo.findOne({ where: { tokenHash, revokedAt: IsNull() } });
     return !!rec;
   }
 

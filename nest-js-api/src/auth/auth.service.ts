@@ -36,11 +36,16 @@ export class AuthService {
     // extract sub (user id) from provided refresh token
     const jwt = require('jsonwebtoken');
     const pub = process.env.JWT_PUBLIC_KEY?.replace(/\\n/g, '\n');
-    const { sub } = jwt.verify(refreshToken, pub, { algorithms: ['RS256'] });
+    if (!pub) {
+      throw new UnauthorizedException('JWT_PUBLIC_KEY is not configured');
+    }
+    const { sub } = jwt.verify(refreshToken, pub, { algorithms: ['RS256'] }) as any;
 
     // rotate: revoke old, issue new
     await this.tokens.revoke(hashToken(refreshToken));
     const user = await this.users.findById(String(sub));
+    if (!user) throw new UnauthorizedException('User not found');
+    
     const payload = { sub: user.id, email: user.email, roles: user.roles };
     const accessToken = signAccessToken(payload);
     const newRefresh = signRefreshToken({ sub: user.id });
