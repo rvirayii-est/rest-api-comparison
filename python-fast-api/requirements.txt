@@ -1,0 +1,9 @@
+fastapi
+"uvicorn[standard]"
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic-settings
+sqlalchemy>=2.0.0
+psycopg[binary]
+python-multipart
+slowapi
